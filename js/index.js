@@ -23,6 +23,8 @@ function animateDescription() {
 			const start = { start: 0, length: 50 };
 			const end = { start: 50, length: 50 };
 
+			element.style.opacity = 0;
+
 			if (frameRange(start, percent)) {
 				const frame = getFrame(start, percent);
 				element.style.opacity = frame;
@@ -40,7 +42,7 @@ function animateDescription() {
 }
 
 function frameRange(config, frame) {
-	return config.start < frame && frame < config.start + config.length;
+	return config.start <= frame && frame < config.start + config.length;
 }
 
 function getFrame(config, frame) {

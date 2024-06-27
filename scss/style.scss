@@ -58,7 +58,13 @@ $triangle-height: 100px;
 	display: block;
 }
 
+.triangle.bottom {
+	position: absolute;
+	top: calc(650vh + 25vw);
+}
+
 #description {
+	position: relative;
 	display: flex;
 	flex-direction: column;
 
@@ -68,6 +74,7 @@ $triangle-height: 100px;
 	height: 550vh;
 
 	background-color: #000;
+	outline: 0.5px solid #000;
 
 	h1 {
 		margin-top: 50vh;
@@ -77,6 +84,22 @@ $triangle-height: 100px;
 		font-weight: 400;
 
 		opacity: 0;
+	}
+}
+
+#projects {
+	width: 100vw;
+	height: 100vh;
+
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+
+	h1 {
+		font-size: 90px;
+		color: #000;
+		font-weight: 400;
 	}
 }
 
