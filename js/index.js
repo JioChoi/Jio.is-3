@@ -11,6 +11,80 @@ function addEffects() {
 	animateDescription();
 	animateTitles();
 	animateProjects();
+
+	animateEducation();
+	animateSkills();
+}
+
+function animateEducation() {
+	const education = document.getElementById('education');
+
+	window.addEventListener('scroll', () => {
+		const y = Math.max(window.innerHeight - education.getBoundingClientRect().top, 0);
+		const percent = y / (education.getBoundingClientRect().height + window.innerHeight) * 100;
+
+		const end = { start: 80, length: 20 };
+
+		const a = { start: 20, length: 10 };
+		const b = { start: 40, length: 10 };
+		const c = { start: 60, length: 10 };
+
+		const container = education.querySelector('.container');
+
+		if (percent > 20 && percent < 100) {
+			container.style.opacity = 1;
+
+			if (frameRange(end, percent)) {
+				const frame = getFrame(end, percent);
+				container.style.opacity = easeOutSine(1 - frame);
+			}
+
+			container.style.top = `${easeOutSine(percent / 100) * -10 + 5}vh`
+
+			const elements = container.children;
+
+			const frameA = easeOutSine(getFrame(a, percent));
+			elements[0].style.transform = `translateY(${100 - (frameA * 100)}px)`;
+			elements[0].style.opacity = easeOutSine(frameA);
+			
+			const frameB = easeOutSine(getFrame(b, percent));
+			elements[1].style.transform = `translateY(${100 - (frameB * 100)}px)`;
+			elements[1].style.opacity = easeOutSine(frameB);
+
+			const frameC = easeOutSine(getFrame(c, percent));
+			elements[2].style.transform = `translateY(${100 - (frameC * 100)}px)`;
+			elements[2].style.opacity = easeOutSine(frameC);
+		}
+		else {
+			container.style.opacity = 0;
+		}
+	});
+}
+
+function animateSkills() {
+	const skills = document.getElementById('skills');
+
+	window.addEventListener('scroll', () => {
+		const y = Math.max(window.innerHeight - skills.getBoundingClientRect().top, 0);
+		const percent = y / skills.getBoundingClientRect().height * 100;
+	});
+
+	const texts = [
+		"HTML", "CSS", "JavaScript",
+		"Node.js", "Express", "MySQL",
+		"PostgreSQL", "C", "C++",
+		"Java", "Python", "Git",
+		"Sass", "SDL2", "GLSL",
+	];
+
+	let tagCloud = new TagCloud('#skills', texts, {
+		radius: 300,
+		maxSpeed: 'normal',
+		initSpeed: 'normal',
+		direction: 135,
+		keep: true,
+		fontSize: 24,
+	});
 }
 
 function animateProjects() {

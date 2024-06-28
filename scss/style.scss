@@ -244,3 +244,58 @@ $triangle-height: 100px;
 		margin-right: 5vw;
 	}
 }
+
+#education {
+	position: relative;
+
+	width: 100vw;
+	height: 300vh;
+
+	.container {
+		top: 0;
+		left: 0;
+
+		position: fixed;
+		opacity: 0;
+
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+
+		width: 100vw;
+		height: 100vh;
+
+		div {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+
+			margin: 25px;
+
+			opacity: 0;
+			
+			h1 {
+				font-size: 40px;
+				color: #000;
+				font-weight: 600;
+			}
+			h2 {
+				font-size: 20px;
+				color: #000;
+				font-weight: 500;
+			}
+		}
+	}
+}
+
+#skills {
+	position: relative;
+	width: 100vw;
+	height: 100vh;
+
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
