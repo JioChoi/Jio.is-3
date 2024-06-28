@@ -13,7 +13,49 @@ function addEffects() {
 	animateProjects();
 
 	animateEducation();
-	animateSkills();
+	//animateSkills();
+
+	initCloud();
+}
+
+function initCloud() {
+	const texts = document.getElementById('skills').querySelectorAll('div');
+
+	for (let i = 0; i < texts.length; i++) {
+		const text = texts[i];
+		const width = text.scrollWidth;
+		text.innerHTML = text.innerHTML + text.innerHTML;
+
+		const speedPerCharacter = 10;
+		const duration = width * speedPerCharacter;
+
+		if (i % 2 == 0) {
+			text.animate([
+				{ transform: `translateX(0px)` },
+				{ transform: `translateX(-${width + 15}px)` }
+			],
+				{
+					duration: duration,
+					iterations: Infinity,
+					easing: 'linear'
+				}
+			);
+		}
+		else {
+			text.animate([
+				{ transform: `translateX(-${width + 15}px)` },
+				{ transform: `translateX(0px)` }
+			],
+				{
+					duration: duration,
+					iterations: Infinity,
+					easing: 'linear'
+				}
+			);
+		}
+
+		console.log(width);
+	}
 }
 
 function animateEducation() {
