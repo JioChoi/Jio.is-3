@@ -60,7 +60,6 @@ $triangle-height: 100px;
 
 .triangle.bottom {
 	position: absolute;
-	top: calc(650vh + 25vw);
 }
 
 #description {
@@ -87,9 +86,9 @@ $triangle-height: 100px;
 	}
 }
 
-#projects {
+.title {
 	width: 100vw;
-	height: 100vh;
+	height: 200vh;
 
 	display: flex;
 	flex-direction: column;
@@ -97,13 +96,151 @@ $triangle-height: 100px;
 	align-items: center;
 
 	h1 {
+		position: fixed;
+		transform: translate(-50%, -50%);
+		left: 50vw;
+
+		opacity: 0;
+
 		font-size: 90px;
 		color: #000;
-		font-weight: 400;
+		font-weight: 800;
+		-webkit-text-fill-color: transparent;
+		-webkit-text-stroke: 1px #000;  
 	}
 }
 
 .project {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+
 	width: 100vw;
 	height: 100vh;
+
+	text-shadow: 0px 0px 50px #00000064;
+	opacity: 0;
+
+	img {
+		position: absolute;
+		pointer-events: none;
+		z-index: -1;
+
+		width: 100%;
+		height: 100vh;
+		object-fit: cover;
+
+		filter: brightness(0.45);
+	}
+	img.fixed {
+		position: fixed;
+		top: 0;
+		left: 0;
+	}
+	video {
+		position: absolute;
+		pointer-events: none;
+		z-index: -1;
+
+		width: 100%;
+		height: 100vh;
+		object-fit: cover;
+
+		border: none;
+		outline: none;
+
+		filter: brightness(0.45);
+	}
+	video.fixed {
+		position: fixed;
+		top: 0;
+		left: 0;
+	}
+
+	h1 {
+		font-size: 100px;
+		color: #fff;
+		font-weight: 500;
+
+		margin-left: 5vw;
+	}
+
+	h2 {
+		font-size: 16px;
+		color: #fff;
+		font-weight: 500;
+
+		margin-left: 5vw;
+		margin-top: 5px;
+	}
+
+	p {
+		width: 600px;
+		
+		font-size: 24px;
+
+		color: #fff;
+		font-weight: 300;
+		line-height: 1.25;
+
+		margin-left: 5vw;
+		margin-top: 30px;
+	}
+
+	a {
+		display: flex;
+
+		justify-content: center;
+		align-items: center;
+
+		width: 100px;
+		height: 36px;
+
+		font-size: 20px;
+		color: #fff;
+		text-decoration: none;
+		font-weight: 400;
+
+		background: linear-gradient(90deg, #fff 50%, transparent 50%);
+		background-size: 200% 100%;
+		background-position: 100% 0;
+		background-repeat: no-repeat;
+
+		border: 1px solid #fff;
+		border-radius: 9px;
+
+		margin-left: 5vw;
+		margin-top: 30px;
+
+		transition: background-position 0.3s, color 0.3s;
+	}
+	a:hover {
+		background-position: 0 0;
+		color: #000;
+	}
+}
+
+.project:nth-child(2n + 1) {
+	align-items: flex-end;
+
+	h1 {
+		float: right;
+		text-align: right;
+		margin-right: 5vw;
+	}
+
+	h2 {
+		text-align: right;
+		margin-right: 5vw;
+	}
+
+	p {
+		text-align: right;
+		margin-right: 5vw;
+	}
+
+	a {
+		float: right;
+		margin-right: 5vw;
+	}
 }

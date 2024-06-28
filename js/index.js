@@ -9,6 +9,113 @@ function addEffects() {
 	});
 
 	animateDescription();
+	animateTitles();
+	animateProjects();
+}
+
+function animateProjects() {
+	const projects = document.getElementsByClassName('project');
+
+	window.addEventListener('scroll', () => {
+		let i = 0;
+		for (let project of projects) {
+			i++;
+
+			const y = Math.max(window.innerHeight - project.getBoundingClientRect().top, 0);
+			const percent = y / (project.getBoundingClientRect().height + window.innerHeight) * 100;
+			const video = project.querySelector('video');
+			const image = project.querySelector('img');
+
+			const start = { start: 25, length: 20 };
+			const end = { start: 70, length: 20 };
+
+			if (percent > 0 && percent < 100) {
+				let frame = getFrame(start, percent);
+				frame = easeOutSine(frame);
+
+				project.style.opacity = frame;
+
+				if (i == projects.length) {
+					if (frameRange(end, percent)) {
+						let frame = getFrame(end, percent);
+						frame = easeOutSine(1 - frame);
+		
+						project.style.opacity = frame;
+					}
+					if (percent > 90) {
+						project.style.opacity = 0;
+					}	
+				}
+
+				if (video && video.paused) {
+					video.play();
+				}
+
+				if (image) {
+					image.classList.add('fixed');
+				}
+				else if (video) {
+					video.classList.add('fixed');
+				}
+			}
+			else {
+				if (video && !video.paused) {
+					video.pause();
+				}
+
+				project.style.opacity = 0;
+
+				if (image) {
+					image.classList.remove('fixed');
+				}
+				else if (video) {
+					video.classList.remove('fixed');
+				}
+			}
+		}
+	});
+}
+
+function animateTitles() {
+	const titles = document.getElementsByClassName('title');
+
+	for (let title of titles) {
+		const project = title;
+		const text = project.querySelector('h1');
+
+		window.addEventListener('scroll', () => {
+			const y = Math.max(window.innerHeight - project.getBoundingClientRect().top - (window.innerHeight * 0.7), 0);
+			const percent = y / project.getBoundingClientRect().height * 100;
+
+			const start = { start: 0, length: 30 };
+			const mid = { start: 30, length: 40 };
+			const end = { start: 70, length: 30 };
+
+			text.style.opacity = 0;
+
+			if (frameRange(start, percent)) {
+				const frame = getFrame(start, percent);
+				text.style.color = 'transparent';
+				text.style.opacity = easeOutSine(frame);
+
+				text.style.top = `${100 - easeOutSine(frame) * 50}vh`;
+			}
+			else if (frameRange(mid, percent)) {
+				const frame = getFrame(mid, percent);
+				text.style.top = '50vh';
+				text.style.opacity = 1;
+				text.style.background = `linear-gradient(0deg, #000000 ${frame * 100}%, #ffffff ${frame * 100}%)`;
+				text.style.webkitBackgroundClip = 'text';
+			}
+			else if (frameRange(end, percent)) {
+				const frame = getFrame(end, percent);
+				text.style.color = '#000000';
+				text.style.opacity = easeOutSine(1 - frame);
+
+				text.style.top = `${50 + easeOutSine(frame) * -50}vh`;
+			}
+		});
+	}
 }
 
 function animateDescription() {
@@ -16,6 +123,11 @@ function animateDescription() {
 	const elements = description.children;
 
 	window.addEventListener('scroll', () => {
+		// If the description is not in view, don't animate
+		if (description.getBoundingClientRect().top > window.innerHeight || description.getBoundingClientRect().bottom < 0) {
+			return;
+		}
+
 		for (element of elements) {
 			const y = Math.max(window.innerHeight - element.getBoundingClientRect().top - element.getBoundingClientRect().height / 2, 0);
 			const percent = y / window.innerHeight * 100;
@@ -27,15 +139,17 @@ function animateDescription() {
 
 			if (frameRange(start, percent)) {
 				const frame = getFrame(start, percent);
-				element.style.opacity = frame;
-				element.style.transform = `scale(${frame * 0.5 + 0.5})`;
-				//element.style.transform = `translateX(${(1 - frame) * -50}vw)`;
+				element.style.opacity = easeOutSine(frame);
+
+				//element.style.transform = `scale(${(1 - frame) * 0.5 + 1})`;
+				element.style.transform = `scale(${easeOutSine(frame) * 0.3 + 0.7})`;
 			}
 			else if (frameRange(end, percent)) {
 				const frame = getFrame(end, percent);
-				element.style.opacity = 1 - frame;
-				element.style.transform = `scale(${(1 - frame) * 0.5 + 0.5})`;
-				//element.style.transform = `translateX(${(frame) * 50}vw)`;
+				element.style.opacity = easeOutSine(1 - frame);
+
+				//element.style.transform = `scale(${(1 - frame) * 0.5 + 0.5})`;
+				element.style.transform = `scale(${easeOutSine(1 - frame) * 0.3 + 0.7})`;
 			}
 		}
 	});
@@ -75,4 +189,8 @@ function typewriter(id, func = null) {
 			}, 500);
 		}
 	}, 140);
+}
+
+function easeOutSine(x) {
+	return Math.sin((x * Math.PI) / 2);
 }
