@@ -72,6 +72,7 @@ function animateEducation() {
 		const container = education.querySelector('.container');
 
 		if (percent > 20 && percent < 100) {
+			container.style.position = 'fixed';
 			container.style.opacity = 1;
 
 			if (frameRange(end, percent)) {
@@ -97,6 +98,7 @@ function animateEducation() {
 		}
 		else {
 			container.style.opacity = 0;
+			container.style.position = 'relative';
 		}
 	});
 }
