@@ -53,8 +53,6 @@ function initCloud() {
 				}
 			);
 		}
-
-		console.log(width);
 	}
 }
 
